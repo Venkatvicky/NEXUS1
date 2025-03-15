@@ -1,0 +1,5 @@
+apiVersion: v2
+name: nexus-oss-helm
+description: A Helm chart to deploy Nexus OSS with MySQL as the backend database.
+version: 1.0.0
+appVersion: "3.71.0"

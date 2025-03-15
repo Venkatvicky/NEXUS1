@@ -1,0 +1,21 @@
+# MySQL Configuration
+mysql:
+  image: mysql:5.7
+  database: nexus
+  username: nexususer
+  password: nexuspassword
+  rootPassword: rootpassword
+  storageClassName: gp3-csi
+  storageSize: 10Gi
+
+# Nexus OSS Configuration
+nexus:
+  image: sonatype/nexus3:3.71.0
+  serviceType: LoadBalancer
+  storageClassName: gp3-csi
+  storageSize: 20Gi
+  ingress:
+    enabled: true
+    host: nexus.example.com
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"

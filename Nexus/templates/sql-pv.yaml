@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+spec:
+  storageClassName: {{ .Values.mysql.storageClassName }}
+  capacity:
+    storage: {{ .Values.mysql.storageSize }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data

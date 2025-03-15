@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nexus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexus
+  template:
+    metadata:
+      labels:
+        app: nexus
+    spec:
+      containers:
+        - name: nexus
+          image: {{ .Values.nexus.image }}
+          ports:
+            - containerPort: 8081
+          env:
+            - name: NEXUS_DB_HOST
+              value: "mysql"
+            - name: NEXUS_DB_NAME
+              value: {{ .Values.mysql.database }}
+            - name: NEXUS_DB_USER
+              value: {{ .Values.mysql.username }}
+            - name: NEXUS_DB_PASSWORD
+              value: {{ .Values.mysql.password }}
+          volumeMounts:
+            - name: nexus-storage
+              mountPath: /nexus-data
+      volumes:
+        - name: nexus-storage
+          persistentVolumeClaim:
+            claimName: nexus-pvc

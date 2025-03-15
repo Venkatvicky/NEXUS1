@@ -28,7 +28,7 @@ spec:
               value: {{ .Values.mysql.password }}
           volumeMounts:
             - name: nexus-storage
-              mountPath: /nexus-data
+              mountPath: /mnt/data
           resources:
             requests:
               memory: "2Gi"

@@ -17,18 +17,28 @@ spec:
           image: {{ .Values.nexus.image }}
           ports:
             - containerPort: 8081
-          env:
-            - name: NEXUS_DB_HOST
-              value: "mysql"
-            - name: NEXUS_DB_NAME
-              value: {{ .Values.mysql.database }}
-            - name: NEXUS_DB_USER
-              value: {{ .Values.mysql.username }}
-            - name: NEXUS_DB_PASSWORD
-              value: {{ .Values.mysql.password }}
           volumeMounts:
             - name: nexus-storage
               mountPath: /nexus-data
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "1"
+            limits:
+              memory: "4Gi"
+              cpu: "2"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 10
       volumes:
         - name: nexus-storage
           persistentVolumeClaim:
